@@ -1,5 +1,5 @@
-import { fetchNews } from './fetchNews';
-import { scrapeContent } from './scrapeContent';
+import { fetchNews } from './fetch-news';
+import { scrapeContent } from './scrape-contents';
 import { loadModel, embedText, initialiseReferenceEmbeddings, getReferenceEmbeddings } from './download-model';
 import { logger } from './utils/logger';
 import axios from 'axios';

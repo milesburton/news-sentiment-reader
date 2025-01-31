@@ -1,4 +1,3 @@
-// Extract full article content
 import axios from 'axios';
 import * as cheerio from 'cheerio';
 
