@@ -60,13 +60,13 @@ Customise the behaviour using environment variables:
 
 ```bash
 # Basic usage with custom RSS feed (default: BBC News feed)
-RSS_FEED_URL=https://your-news-source.com/feed.xml docker-compose up
+RSS_FEED_URL=https://your-news-source.com/feed.xml
 
 # Enable debug logging
 LOG_LEVEL=debug docker-compose up
 
 # Custom Ollama settings
-OLLAMA_HOST=http://custom-host OLLAMA_PORT=11434 docker-compose up
+OLLAMA_HOST=http://custom-host OLLAMA_PORT=11434
 ```
 
 ## Manual Setup 🔧
