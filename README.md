@@ -1,83 +1,48 @@
-# News Sentiment Analyzer 📰 🤖
+## Docker Setup 🐳
 
-Analyze the political sentiment of BBC news articles using AI. Built with Bun, TypeScript, and TensorFlow.js.
+You can run the entire application using Docker, without needing to install any dependencies locally.
 
-## Features 🌟
+### Using Docker Compose (Recommended)
 
-- 📊 Real-time news sentiment analysis
-- 🔄 RSS feed integration
-- 🧠 Local AI model caching
-- ⚡ High-performance text processing
-- 🔍 Fallback sentiment analysis using embeddings
-
-## Prerequisites 📋
-
-- [Bun](https://bun.sh) installed on your system
-- [Ollama](https://ollama.ai) running locally with Mistral model
-- Node.js 18+ (for TensorFlow.js dependencies)
-
-## Setup 🛠️
-
-1. Clone the repository:
+1. Build and start the services:
 ```bash
-git clone <repository-url>
-cd news-sentiment-analyser
+docker-compose up --build
 ```
 
-2. Install dependencies:
+This will:
+- Start Ollama service
+- Download the Mistral model
+- Build and start the sentiment analyzer
+- Handle all networking between services
+
+### Environment Variables 🔧
+
+You can customize the behavior using environment variables in docker-compose.yml:
+
+- `OLLAMA_HOST`: Ollama service host (default: http://ollama)
+- `OLLAMA_PORT`: Ollama service port (default: 11434)
+- `RSS_FEED_URL`: News feed URL (default: BBC News)
+- `LOG_LEVEL`: Logging verbosity (default: info)
+
+### Manual Docker Build 🏗️
+
+If you prefer to run the containers separately:
+
+1. Build the image:
 ```bash
-bun install
+docker build -t news-sentiment-analyzer .
 ```
 
-3. Set up environment variables:
+2. Run Ollama:
 ```bash
-cp .env.example .env
+docker run -d --name ollama -p 11434:11434 ollama/ollama
 ```
 
-Edit `.env` with your configuration:
-```env
-RSS_FEED_URL=https://feeds.bbci.co.uk/news/rss.xml
-```
-
-4. Download the AI model:
+3. Run the analyzer:
 ```bash
-bun run download-model
+docker run --link ollama:ollama news-sentiment-analyzer
 ```
 
-## Usage 🚀
+### Persistent Storage 💾
 
-Run the analyzer:
-```bash
-bun run start
-```
-
-## Project Structure 📁
-
-```
-src/
-  ├── types/          # Type definitions
-  ├── download-model  # Model management
-  ├── fetchNews      # RSS feed handling
-  ├── scrapeContent  # Article scraping
-  └── main           # Application entry point
-```
-
-## Error Handling 🔧
-
-- The application will fallback to embedding-based analysis if Ollama is unavailable
-- Failed article fetches are logged but won't stop the application
-- Network timeouts are handled gracefully
-
-## Contributing 🤝
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-## License 📄
-
-[MIT](LICENSE)
-
-## Acknowledgments 🙏
-
-- BBC News for their RSS feed
-- Ollama team for the local AI model
-- TensorFlow.js team for their embeddings model
+Ollama models are stored in a named volume `ollama_data` and will persist between container restarts.
