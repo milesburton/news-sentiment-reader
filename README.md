@@ -63,10 +63,11 @@ Customise the behaviour using environment variables:
 RSS_FEED_URL=https://feeds.bbci.co.uk/news/rss.xml
 
 # Enable debug logging
-LOG_LEVEL=debug docker-compose up
+LOG_LEVEL=debug
 
 # Custom Ollama settings
-OLLAMA_HOST=http://custom-host OLLAMA_PORT=11434
+OLLAMA_HOST=http://custom-host 
+OLLAMA_PORT=11434
 ```
 
 ## Manual Setup 🔧
