@@ -60,7 +60,7 @@ Customise the behaviour using environment variables:
 
 ```bash
 # Basic usage with custom RSS feed
-RSS_FEED_URL=https://custom-feed.com/rss docker-compose up
+RSS_FEED_URL=https://custom-feed.com/rss
 
 # Enable debug logging
 LOG_LEVEL=debug docker-compose up
