@@ -1,6 +1,6 @@
-# News Sentiment Analyzer 📰 🤖
+# News Sentiment Analyser 📰 🤖
 
-Analyze the political sentiment of BBC news articles using AI, powered by Ollama and TensorFlow. This tool automatically fetches news articles and determines if they lean Left, Right, or Centre in their political perspective.
+Analyse the political sentiment of BBC news articles using AI, powered by Ollama and TensorFlow. This tool automatically fetches news articles and determines if they lean Left, Right, or Centre in their political perspective.
 
 ## Features 🌟
 
@@ -14,7 +14,7 @@ Analyze the political sentiment of BBC news articles using AI, powered by Ollama
 ## How It Works 🛠️
 
 1. Fetches latest news from BBC RSS feed
-2. Uses Ollama (Mistral) to analyze political sentiment
+2. Uses Ollama (Mistral) to analyse political sentiment
 3. Falls back to TensorFlow embeddings if Ollama is unavailable
 4. Generates a visual summary of political leanings
 
@@ -42,7 +42,7 @@ Example output:
 
 ## Quick Start with Docker 🐳
 
-The easiest way to run the analyzer is using Docker Compose:
+The easiest way to run the analyser is using Docker Compose:
 
 ```bash
 docker-compose up --build
@@ -51,12 +51,12 @@ docker-compose up --build
 This will:
 - 📦 Set up all required dependencies
 - 🤖 Start Ollama with the Mistral model
-- 🚀 Launch the sentiment analyzer
+- 🚀 Launch the sentiment analyser
 - 📊 Begin processing the latest news
 
 ## Configuration Options ⚙️
 
-Customize the behavior using environment variables:
+Customise the behaviour using environment variables:
 
 ```bash
 # Basic usage with custom RSS feed
@@ -87,7 +87,7 @@ If you prefer to run without Docker, you'll need:
    # Install dependencies
    bun install
 
-   # Run the analyzer
+   # Run the analyser
    bun run start
    ```
 
@@ -105,7 +105,7 @@ src/
 
 ## Error Handling 🔧
 
-The analyzer is designed to be resilient:
+The analyser is designed to be resilient:
 - ✅ Automatic fallback to TensorFlow if Ollama is unavailable
 - 🔄 Continues processing even if some articles fail
 - 📝 Detailed logging of any issues
@@ -137,7 +137,7 @@ Common issues and solutions:
 1. **Ollama Connection Failed**
    - Ensure Ollama is running
    - Check the OLLAMA_HOST and OLLAMA_PORT settings
-   - The analyzer will automatically fall back to TensorFlow
+   - The analyser will automatically fall back to TensorFlow
 
 2. **RSS Feed Issues**
    - Verify the RSS_FEED_URL is accessible
@@ -149,11 +149,11 @@ Common issues and solutions:
    - Ensure sufficient system resources
    - Check Docker resource allocation
 
-## License 📄
+## Licence 📄
 
-[MIT](LICENSE)
+[MIT](LICENCE)
 
-## Acknowledgments 🙏
+## Acknowledgements 🙏
 
 - BBC News for their RSS feed
 - Ollama team for the local AI capabilities
