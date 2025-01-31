@@ -1,6 +1,6 @@
 # News Sentiment Analyser 📰 🤖
 
-Analyse the political sentiment of BBC news articles using AI, powered by Ollama and TensorFlow. This tool automatically fetches news articles and determines if they lean Left, Right, or Centre in their political perspective.
+Analyse the political sentiment of news articles using AI, powered by Ollama and TensorFlow. This tool automatically fetches news from RSS feeds and determines if articles lean Left, Right, or Centre in their political perspective.
 
 ## Features 🌟
 
@@ -13,7 +13,7 @@ Analyse the political sentiment of BBC news articles using AI, powered by Ollama
 
 ## How It Works 🛠️
 
-1. Fetches latest news from BBC RSS feed
+1. Fetches latest news from your chosen RSS feed
 2. Uses Ollama (Mistral) to analyse political sentiment
 3. Falls back to TensorFlow embeddings if Ollama is unavailable
 4. Generates a visual summary of political leanings
@@ -59,8 +59,8 @@ This will:
 Customise the behaviour using environment variables:
 
 ```bash
-# Basic usage with custom RSS feed
-RSS_FEED_URL=https://custom-feed.com/rss
+# Basic usage with custom RSS feed (default: BBC News feed)
+RSS_FEED_URL=https://your-news-source.com/feed.xml docker-compose up
 
 # Enable debug logging
 LOG_LEVEL=debug docker-compose up
@@ -151,11 +151,10 @@ Common issues and solutions:
 
 ## Licence 📄
 
-[MIT](LICENCE)
+[MIT](LICENSE)
 
 ## Acknowledgements 🙏
 
-- BBC News for their RSS feed
 - Ollama team for the local AI capabilities
 - TensorFlow.js team for the embeddings model
 - Bun team for the high-performance runtime
