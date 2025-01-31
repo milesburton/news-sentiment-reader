@@ -60,7 +60,7 @@ Customise the behaviour using environment variables:
 
 ```bash
 # Basic usage with custom RSS feed (default: BBC News feed)
-RSS_FEED_URL=https://your-news-source.com/feed.xml
+RSS_FEED_URL=https://feeds.bbci.co.uk/news/rss.xml
 
 # Enable debug logging
 LOG_LEVEL=debug docker-compose up
