@@ -1,48 +1,161 @@
-## Docker Setup 🐳
+# News Sentiment Analyzer 📰 🤖
 
-You can run the entire application using Docker, without needing to install any dependencies locally.
+Analyze the political sentiment of BBC news articles using AI, powered by Ollama and TensorFlow. This tool automatically fetches news articles and determines if they lean Left, Right, or Centre in their political perspective.
 
-### Using Docker Compose (Recommended)
+## Features 🌟
 
-1. Build and start the services:
+- 🔄 Real-time RSS feed processing
+- 🧠 Local AI analysis using Ollama (Mistral model)
+- 📊 Visual sentiment statistics
+- 🚀 High-performance processing with Bun
+- 💾 Model caching for improved performance
+- 📈 Beautiful console output with sentiment distribution
+
+## How It Works 🛠️
+
+1. Fetches latest news from BBC RSS feed
+2. Uses Ollama (Mistral) to analyze political sentiment
+3. Falls back to TensorFlow embeddings if Ollama is unavailable
+4. Generates a visual summary of political leanings
+
+Example output:
+```
+=========================
+📊 Analysis Summary
+=========================
+📚 Total Articles: 10
+✅ Successfully Processed: 9
+❌ Failed: 1
+
+📈 Sentiment Distribution:
+  Left: 🟦🟦🟦 (3)
+  Right: 🟥🟥 (2)
+  Centre: ⬜⬜⬜⬜ (4)
+
+🔄 Processing Method:
+  Ollama: 🤖🤖🤖🤖🤖 (5)
+  Local: 🧮🧮🧮🧮 (4)
+
+⏱️ Time Elapsed: 12.34s
+=========================
+```
+
+## Quick Start with Docker 🐳
+
+The easiest way to run the analyzer is using Docker Compose:
+
 ```bash
 docker-compose up --build
 ```
 
 This will:
-- Start Ollama service
-- Download the Mistral model
-- Build and start the sentiment analyzer
-- Handle all networking between services
+- 📦 Set up all required dependencies
+- 🤖 Start Ollama with the Mistral model
+- 🚀 Launch the sentiment analyzer
+- 📊 Begin processing the latest news
 
-### Environment Variables 🔧
+## Configuration Options ⚙️
 
-You can customize the behavior using environment variables in docker-compose.yml:
+Customize the behavior using environment variables:
 
-- `OLLAMA_HOST`: Ollama service host (default: http://ollama)
-- `OLLAMA_PORT`: Ollama service port (default: 11434)
-- `RSS_FEED_URL`: News feed URL (default: BBC News)
-- `LOG_LEVEL`: Logging verbosity (default: info)
-
-### Manual Docker Build 🏗️
-
-If you prefer to run the containers separately:
-
-1. Build the image:
 ```bash
-docker build -t news-sentiment-analyzer .
+# Basic usage with custom RSS feed
+RSS_FEED_URL=https://custom-feed.com/rss docker-compose up
+
+# Enable debug logging
+LOG_LEVEL=debug docker-compose up
+
+# Custom Ollama settings
+OLLAMA_HOST=http://custom-host OLLAMA_PORT=11434 docker-compose up
 ```
 
-2. Run Ollama:
-```bash
-docker run -d --name ollama -p 11434:11434 ollama/ollama
+## Manual Setup 🔧
+
+If you prefer to run without Docker, you'll need:
+
+1. Prerequisites:
+   - [Bun](https://bun.sh) installed
+   - [Ollama](https://ollama.ai) running locally
+   - Node.js 18+ (for TensorFlow)
+
+2. Installation:
+   ```bash
+   # Clone the repository
+   git clone https://github.com/milesburton/news-sentiment-reader.git
+   cd news-sentiment-reader
+
+   # Install dependencies
+   bun install
+
+   # Run the analyzer
+   bun run start
+   ```
+
+## Project Structure 📁
+
+```
+src/
+  ├── types/          # TypeScript type definitions
+  ├── utils/          # Utility functions and logger
+  ├── download-model  # TensorFlow model management
+  ├── fetchNews      # RSS feed handling
+  ├── scrapeContent  # Article content extraction
+  └── main           # Application entry point
 ```
 
-3. Run the analyzer:
-```bash
-docker run --link ollama:ollama news-sentiment-analyzer
-```
+## Error Handling 🔧
 
-### Persistent Storage 💾
+The analyzer is designed to be resilient:
+- ✅ Automatic fallback to TensorFlow if Ollama is unavailable
+- 🔄 Continues processing even if some articles fail
+- 📝 Detailed logging of any issues
+- 🛡️ Graceful handling of network errors
 
-Ollama models are stored in a named volume `ollama_data` and will persist between container restarts.
+## Contributing 🤝
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+1. Fork the repository
+2. Create your feature branch:
+   ```bash
+   git checkout -b feature/amazing-feature
+   ```
+3. Commit your changes:
+   ```bash
+   git commit -m 'feat: Add amazing feature'
+   ```
+4. Push to the branch:
+   ```bash
+   git push origin feature/amazing-feature
+   ```
+5. Open a Pull Request
+
+## Troubleshooting 🔍
+
+Common issues and solutions:
+
+1. **Ollama Connection Failed**
+   - Ensure Ollama is running
+   - Check the OLLAMA_HOST and OLLAMA_PORT settings
+   - The analyzer will automatically fall back to TensorFlow
+
+2. **RSS Feed Issues**
+   - Verify the RSS_FEED_URL is accessible
+   - Check your internet connection
+   - Ensure the feed is properly formatted RSS
+
+3. **Performance Issues**
+   - Adjust LOG_LEVEL to reduce output
+   - Ensure sufficient system resources
+   - Check Docker resource allocation
+
+## License 📄
+
+[MIT](LICENSE)
+
+## Acknowledgments 🙏
+
+- BBC News for their RSS feed
+- Ollama team for the local AI capabilities
+- TensorFlow.js team for the embeddings model
+- Bun team for the high-performance runtime
