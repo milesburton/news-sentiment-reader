@@ -26,8 +26,3 @@ build
 # OS files
 .DS_Store
 Thumbs.db
-
-# Docker files
-Dockerfile
-docker-compose.yml
-.dockerignore
