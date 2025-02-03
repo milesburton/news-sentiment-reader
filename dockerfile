@@ -1,36 +1,41 @@
-# Use an Ubuntu base for better compatibility
-FROM ubuntu:22.04
-# Prevent timezone prompt during installation
-ENV DEBIAN_FRONTEND=noninteractive
-ENV TZ=Europe/London
-# Install essential packages and Node.js
+# Use VSCode development container as base
+FROM mcr.microsoft.com/vscode/devcontainers/javascript-node:latest
+
+# Install Fish shell and other tools
+USER root
 RUN apt-get update && apt-get install -y \
-    curl \
-    unzip \
-    python3 \
-    build-essential \
-    && curl -fsSL https://deb.nodesource.com/setup_current.x | bash - \
-    && apt-get install -y nodejs \
+    fish \
+    gh \
+    docker.io \
+    docker-compose \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
-# Install bun
-RUN curl -fsSL https://bun.sh/install | bash
-# Set up working directory
-WORKDIR /app
-# Copy package files
-COPY package.json bun.lockb ./
-# Add bun and node to PATH
-ENV PATH="/root/.bun/bin:/usr/local/bin/node:${PATH}"
-# Install dependencies
-RUN bun install
-# Copy the rest of the application
-COPY . .
-# Create models directory
-RUN mkdir -p models/embeddings-cache
+
+# Set Fish as default shell
+SHELL ["/usr/bin/fish", "-c"]
+ENV SHELL=/usr/bin/fish
+
+# Install bun as root and make it available system-wide
+RUN curl -fsSL https://bun.sh/install | bash \
+    && ln -s /root/.bun/bin/bun /usr/local/bin/bun
+
+# Set up Fish config for node user
+RUN mkdir -p /home/node/.config/fish \
+    && echo "set -x EDITOR code" >> /home/node/.config/fish/config.fish \
+    && echo "set -x VISUAL code" >> /home/node/.config/fish/config.fish \
+    && echo "alias g='git'" >> /home/node/.config/fish/config.fish \
+    && echo "alias d='docker'" >> /home/node/.config/fish/config.fish \
+    && echo "alias dc='docker-compose'" >> /home/node/.config/fish/config.fish \
+    && echo "alias gh='gh'" >> /home/node/.config/fish/config.fish \
+    && echo "gh completion -s fish | source" >> /home/node/.config/fish/config.fish \
+    && chown -R node:node /home/node/.config
+
+# Switch to node user
+USER node
+WORKDIR /workspace
+
 # Set default environment variables
 ENV OLLAMA_HOST=http://ollama
 ENV OLLAMA_PORT=11434
 ENV RSS_FEED_URL=https://feeds.bbci.co.uk/news/rss.xml
 ENV LOG_LEVEL=info
-# Start the application
-CMD ["bun", "run", "start"]

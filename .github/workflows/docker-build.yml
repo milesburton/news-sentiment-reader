@@ -16,10 +16,12 @@ jobs:
     - name: Build Docker image
       run: docker build -t my-app .
 
-    - name: Test Docker image
+    - name: Test environment setup
       run: |
+        docker run --rm my-app fish -c "echo 'Testing fish shell'"
         docker run --rm my-app bun --version
         docker run --rm my-app node --version
+        docker run --rm my-app whoami
 
     - name: Run application (test mode)
       run: |
