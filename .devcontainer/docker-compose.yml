@@ -1,0 +1,64 @@
+name: news-sentiment-reader
+
+services:
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_cache:/root/.ollama
+      - type: bind
+        source: ./entrypoint-ollama.sh
+        target: /entrypoint-ollama.sh
+    tty: true
+    restart: always
+    entrypoint: [ "/bin/bash", "-c", "chmod +x /entrypoint-ollama.sh && /entrypoint-ollama.sh" ]
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [ gpu ]
+    #    healthcheck: disabled as it depends on the internet speeds to download the llm
+    #      test: ["CMD-SHELL", "curl -f http://localhost:11434/api/tags || exit 1"]
+    #      interval: 30s
+    #      timeout: 600s
+    #      retries: 20
+    #      start_period: 10s
+    networks:
+      - ollama_network
+
+  app:
+    build:
+      context: ..
+      dockerfile: .devcontainer/DockerfileSentiment
+    container_name: news-sentiment-analyser
+    init: true
+    command: "bun run start"
+    environment:
+      - OLLAMA_HOST=http://ollama
+      - OLLAMA_PORT=11434
+      - RSS_FEED_URL=https://feeds.bbci.co.uk/news/rss.xml
+      - LOG_LEVEL=info
+    volumes:
+      - type: bind
+        source: ..
+        target: /workspace
+        consistency: cached
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+    depends_on:
+      ollama:
+        condition: service_started
+    networks:
+      - ollama_network
+
+volumes:
+  ollama_cache:
+
+networks:
+  ollama_network:
+    driver: bridge
