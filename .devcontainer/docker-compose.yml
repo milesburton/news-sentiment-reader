@@ -16,19 +16,21 @@ services:
     entrypoint: [ "/bin/bash", "-c", "chmod +x /entrypoint-ollama.sh && /entrypoint-ollama.sh" ]
     deploy:
       resources:
+        limits:
+          memory: 2500M
         reservations:
           devices:
             - driver: nvidia
               count: 1
               capabilities: [ gpu ]
-    #    healthcheck: disabled as it depends on the internet speeds to download the llm
-    #      test: ["CMD-SHELL", "curl -f http://localhost:11434/api/tags || exit 1"]
-    #      interval: 30s
-    #      timeout: 600s
-    #      retries: 20
-    #      start_period: 10s
     networks:
       - ollama_network
+#    healthcheck: disabled as it depends on the internet speeds to download the llm
+#      test: ["CMD-SHELL", "curl -f http://localhost:11434/api/tags || exit 1"]
+#      interval: 30s
+#      timeout: 600s
+#      retries: 20
+#      start_period: 10s
 
   app:
     build:
@@ -55,6 +57,11 @@ services:
         condition: service_started
     networks:
       - ollama_network
+    deploy:
+        resources:
+          limits:
+            memory: 2500M
+
 
 volumes:
   ollama_cache:
