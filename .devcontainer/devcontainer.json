@@ -1,9 +1,19 @@
 {
   "name": "News Sentiment Analyser",
-  "build": {
-    "dockerfile": "../Dockerfile"
-  },
+  "dockerComposeFile": ["docker-compose.yml"],
+  "service": "app",
+  "workspaceFolder": "/workspace",
   "customizations": {
+    "jetbrains": {
+      "settings": {
+        "com.intellij:app:BaseRefactoringSettings.safe_delete_when_delete": false,
+        "com.intellij:app:BaseRefactoringSettings.rename_search_in_comments_for_file": false,
+        "com.intellij:app:BaseRefactoringSettings.rename_search_for_references_for_file": false,
+        "com.intellij:app:EditorSettings.soft_wrap_file_masks": "*.md; *.txt; *.rst; *.adoc; *.java; *.*; *",
+        "org.jetbrains.plugins.github:app:GithubSettings.clone_git_using_ssh": true,
+        "com.intellij:app:HttpConfigurable.use_proxy_pac": true
+      }
+    },
     "vscode": {
       "extensions": [
         "dbaeumer.vscode-eslint",
@@ -30,7 +40,7 @@
           }
         },
         "editor.codeActionsOnSave": {
-          "source.fixAll.eslint": true
+          "source.fixAll.eslint": "explicit"
         },
         "editor.defaultFormatter": "esbenp.prettier-vscode",
         "editor.formatOnSave": true,
@@ -41,16 +51,18 @@
           "editor.defaultFormatter": "esbenp.prettier-vscode"
         },
         "cSpell.language": "en-GB",
-        "cSpell.userWords": ["analyser", "tailwindcss"]
+        "cSpell.userWords": ["analyser", "tailwindcss", "ollama"],
+        "typescript.enablePromptUseWorkspaceTsdk": true,
+        "editor.quickSuggestions": {
+          "strings": true
+        }
       }
     }
   },
   "features": {
-    "ghcr.io/devcontainers/features/docker-in-docker:2": {},
+//    "ghcr.io/devcontainers/features/docker-in-docker:2": {},
     "ghcr.io/devcontainers/features/github-cli:1": {}
   },
   "remoteUser": "node",
-  "mounts": [
-    "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached"
-  ]
+  "updateRemoteUserUID": true
 }
