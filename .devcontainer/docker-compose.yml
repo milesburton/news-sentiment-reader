@@ -52,6 +52,7 @@ services:
       - type: bind
         source: /var/run/docker.sock
         target: /var/run/docker.sock
+      - intellij_backend:/home/node/.cache/JetBrains
     depends_on:
       ollama:
         condition: service_started
