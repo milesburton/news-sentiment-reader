@@ -38,7 +38,7 @@ services:
       dockerfile: .devcontainer/DockerfileSentiment
     container_name: news-sentiment-analyser
     init: true
-    command: sh -c "bun install && bun run start"
+    command: "bun install && bun run start"
     environment:
       - OLLAMA_HOST=http://ollama
       - OLLAMA_PORT=11434
