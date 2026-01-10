@@ -41,7 +41,10 @@
           "editor.defaultFormatter": "esbenp.prettier-vscode"
         },
         "cSpell.language": "en-GB",
-        "cSpell.userWords": ["analyser", "tailwindcss"]
+        "cSpell.userWords": [
+          "analyser",
+          "tailwindcss"
+        ]
       }
     }
   },
@@ -51,6 +54,7 @@
   },
   "remoteUser": "node",
   "mounts": [
-    "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached"
+    "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached",
+    "source=${localEnv:HOME}/.config/claude,target=/home/node/.config/claude,type=bind"
   ]
 }
